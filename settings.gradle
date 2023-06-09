@@ -1,6 +1,6 @@
 import java.nio.file.Files
 
-rootProject.name = 'shadow'
+rootProject.name = 'SelfShadow'
 
 copyLocalPropertiesForIncludeBuilds()
 includeBuild 'projects/sdk/coding'
