@@ -38,7 +38,7 @@ public class UseCaseApplication extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         Log.e(LOG_TAG, "base:" + base + ", getApplicationContext:" + getApplicationContext());
-        ContextFixer.fixContext(base);
+        ContextFixer.fixContext(getApplicationContext());
     }
 
     @Override
