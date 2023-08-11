@@ -3,7 +3,10 @@ package com.tencent.shadow.sample.plugin.app.lib;
 import static com.tencent.shadow.sample.plugin.app.lib.gallery.cases.UseCaseManager.useCases;
 
 import android.app.Application;
+import android.content.Context;
+import android.util.Log;
 
+import com.dofun.vbox.client.fixer.ContextFixer;
 import com.tencent.shadow.sample.plugin.app.lib.gallery.cases.UseCaseManager;
 import com.tencent.shadow.sample.plugin.app.lib.gallery.cases.entity.UseCase;
 import com.tencent.shadow.sample.plugin.app.lib.gallery.cases.entity.UseCaseCategory;
@@ -29,9 +32,19 @@ import com.tencent.shadow.sample.plugin.app.lib.usecases.receiver.TestReceiverAc
 import com.tencent.shadow.sample.plugin.app.lib.usecases.webview.WebViewActivity;
 
 public class UseCaseApplication extends Application {
+    public static final String LOG_TAG = "shadow_plugin-App";
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        Log.e(LOG_TAG, "base:" + base + ", getApplicationContext:" + getApplicationContext());
+        ContextFixer.fixContext(base);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.e(LOG_TAG, "getBaseContext:" + getBaseContext() + ", getApplicationContext:" + getApplicationContext());
         initCase();
     }
 

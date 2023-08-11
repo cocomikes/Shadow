@@ -68,7 +68,9 @@ public class AndroidLogLoggerFactory implements ILoggerFactory {
         }
 
         private void log(int level, String message, Throwable t) {
-            final String tag = String.valueOf(name);
+            String[] classNameArray = name.split("\\.");
+            String showName = classNameArray[classNameArray.length - 1];
+            final String tag = "shadow_plugin-" + showName;
 
             switch (level) {
                 case LOG_LEVEL_TRACE:
