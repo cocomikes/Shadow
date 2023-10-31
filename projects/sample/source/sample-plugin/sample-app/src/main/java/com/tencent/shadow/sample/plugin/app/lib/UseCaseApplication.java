@@ -4,6 +4,8 @@ import static com.tencent.shadow.sample.plugin.app.lib.gallery.cases.UseCaseMana
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Parcel;
 import android.util.Log;
 
 import com.dofun.vbox.client.fixer.ContextFixer;
@@ -31,6 +33,8 @@ import com.tencent.shadow.sample.plugin.app.lib.usecases.receiver.TestDynamicRec
 import com.tencent.shadow.sample.plugin.app.lib.usecases.receiver.TestReceiverActivity;
 import com.tencent.shadow.sample.plugin.app.lib.usecases.webview.WebViewActivity;
 
+import app.dofunbox.remote.ClientConfig;
+
 public class UseCaseApplication extends Application {
     public static final String LOG_TAG = "shadow_plugin-App";
 
@@ -39,6 +43,25 @@ public class UseCaseApplication extends Application {
         super.attachBaseContext(base);
         Log.e(LOG_TAG, "base:" + base + ", getApplicationContext:" + getApplicationContext());
         ContextFixer.fixContext(getApplicationContext());
+
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.packageName = "pppppppp";
+        clientConfig.processName = "123123123123";
+        Bundle extras = new Bundle();
+        Parcel out = Parcel.obtain();
+        clientConfig.writeToParcel(out, 0);
+        out.setDataPosition(0);
+        extras.putByteArray("DF_client_config-RAW", out.marshall());
+
+        extras.setClassLoader(ClientConfig.class.getClassLoader());
+        byte[] data = extras.getByteArray("DF_client_config-RAW");
+        if(data != null){
+            Parcel in = Parcel.obtain();
+            in.unmarshall(data, 0, data.length);
+            in.setDataPosition(0);
+            ClientConfig clientConfigExtra = ClientConfig.CREATOR.createFromParcel(in);
+            Log.e("shadow-plugin-New", clientConfigExtra.toString());
+        }
     }
 
     @Override
